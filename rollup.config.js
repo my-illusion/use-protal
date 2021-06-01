@@ -1,6 +1,6 @@
 import nodeResolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import babel from "rollup-plugin-babel";
+import babel from "@rollup/plugin-babel";
 import { terser } from "rollup-plugin-terser";
 
 import { name } from "./package.json";
@@ -11,15 +11,16 @@ export default [
     output: [
       {
         exports: "named",
-        file: `lib/${name}.cjs.js`,
-        format: "cjs",
+        file: `esm/${name}.esm.js`,
+        format: "esm",
       },
       {
         exports: "named",
-        file: `es/${name}.es.js`,
-        format: "es",
+        file: `lib/${name}.cjs.js`,
+        format: "cjs",
       },
     ],
+    external: (id) => id.includes("@babel/runtime"),
     plugins: [
       nodeResolve({
         mainFields: ["module", "main"],
@@ -29,6 +30,8 @@ export default [
       }),
       babel({
         exclude: "node_modules/**",
+        babelHelpers: "runtime",
+        extensions: [".js", ".ts", ".jsx", "tsx"],
       }),
       terser(),
     ],
