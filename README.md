@@ -1,2 +1,2 @@
-# Create_Library_Framework
-基于rollup创建的类库开发模版
+# use-protal
+基于 ReactDOM.createProtal 快速创建分离dom的hook
